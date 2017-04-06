@@ -1,1 +1,1 @@
-postgres://endaga_dev:endaga_dev@192.168.40.20/endagaweb_dev
+postgres://endaga_dev:endaga_dev@192.168.100.201/endagaweb_dev

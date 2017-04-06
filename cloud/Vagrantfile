@@ -18,17 +18,17 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
   config.vm.define :web, primary: true do |web|
     web.vm.hostname = "endaga-web"
-    web.vm.network "private_network", ip: "192.168.40.10"
-    web.vm.network "forwarded_port", guest: 8000, host: 9000
-    web.vm.network "forwarded_port", guest: 80, host: 9080
-    web.vm.network "forwarded_port", guest: 443, host: 9443
+    web.vm.network "public_network", ip: "192.168.100.200"
+#    web.vm.network "forwarded_port", guest: 8000, host: 9000
+#    web.vm.network "forwarded_port", guest: 80, host: 9080
+#    web.vm.network "forwarded_port", guest: 443, host: 9443
     web.vm.provision "ansible" do |ansible|
         ansible.playbook = "ansible/web.dev.yml"
         ansible.verbose = true
     end
     web.vm.provision "shell",
     run: "always",
-    inline: "route add -net 10.64.0.0 netmask 255.255.255.0 gw 192.168.40.60 || true"
+    inline: "route add -net 10.64.0.0 netmask 255.255.255.0 gw 192.168.100.204 || true"
     config.vm.provider "virtualbox" do |v|
       v.memory = 512
       v.cpus = 1
@@ -42,7 +42,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
   config.vm.define :db do |db|
     db.vm.hostname = "endaga-db"
-    db.vm.network "private_network", ip: "192.168.40.20"
+    db.vm.network "public_network", ip: "192.168.100.201"
     db.vm.provision "ansible" do |ansible|
         ansible.playbook = "ansible/postgres.dev.yml"
         ansible.verbose = true
@@ -55,15 +55,15 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
   config.vm.define :rmq do |rmq|
     rmq.vm.hostname = "endaga-rmq"
-    rmq.vm.network "forwarded_port", guest: 5555, host: 5555
-    rmq.vm.network "private_network", ip: "192.168.40.30"
+#    rmq.vm.network "forwarded_port", guest: 5555, host: 5555
+    rmq.vm.network "public_network", ip: "192.168.100.202"
     rmq.vm.provision "ansible" do |ansible|
         ansible.playbook = "ansible/rabbitmq.dev.yml"
         ansible.verbose = true
     end
     rmq.vm.provision "shell",
     run: "always",
-    inline: "route add -net 10.64.0.0 netmask 255.255.0.0 gw 192.168.40.60 || true"
+    inline: "route add -net 10.64.0.0 netmask 255.255.0.0 gw 192.168.100.204 || true"
     config.vm.provider "virtualbox" do |v|
       v.memory = 512
       v.cpus = 1
@@ -72,7 +72,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
   config.vm.define :cert do |cert|
     cert.vm.hostname = "endaga-cert"
-    cert.vm.network "private_network", ip: "192.168.40.40"
+    cert.vm.network "public_network", ip: "192.168.100.203"
     cert.vm.provision "ansible" do |ansible|
         ansible.playbook = "ansible/certifier.dev.yml"
         ansible.verbose = true
@@ -98,7 +98,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
   config.vm.define :vpn do |vpn|
     vpn.vm.hostname = "endaga-vpn"
-    vpn.vm.network "private_network", ip: "192.168.40.60"
+    vpn.vm.network "public_network", ip:"192.168.100.204"
     vpn.vm.provision "ansible" do |ansible|
         ansible.playbook = "ansible/vpn.dev.yml"
         ansible.verbose = true

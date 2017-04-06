@@ -272,7 +272,7 @@ ENDAGA = {
     # Internal API.
     'INTERNAL_API': os.environ.get("INTERNAL_API", "localhost:8080"),
     'KEYMASTER': os.environ['KEYMASTER'],
-    'VPN_SERVER_IP': os.environ.get("VPN_SERVER_IP", "192.168.40.60"),
+    'VPN_SERVER_IP': os.environ.get("VPN_SERVER_IP", "192.168.100.204"),
 
     # Enable/disable billing for networks. If false, we ignore what's in the
     # network's account balance.

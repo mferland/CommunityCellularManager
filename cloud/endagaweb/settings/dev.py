@@ -39,13 +39,13 @@ INSTALLED_APPS += [
 INTERNAL_IPS = glob_list(["127.0.0.1", "10.0.*.*"])
 
 # Point to the local certifier VM to allow BTS registration
-ENDAGA['KEYMASTER'] = os.environ.get("KEYMASTER", "192.168.40.40")
+ENDAGA['KEYMASTER'] = os.environ.get("KEYMASTER", "192.168.100.203")
 
 # Location of the sason (or other) SAS
 SASON_REQUEST_URL = os.environ.get("SASON_REQUEST_URL",
-                                   "http://192.168.40.10:8000/sason/request/")
+                                   "http://192.168.100.200:8000/sason/request/")
 SASON_ACQUIRE_URL = os.environ.get("SASON_ACQUIRE_URL",
-                                   "http://192.168.40.10:8000/sason/acquire/")
+                                   "http://192.168.100.200:8000/sason/acquire/")
 
 # in dev environment we serve static files directly, not via nginx, so
 # put them somewhere more convenient than /var/www
